@@ -118,6 +118,11 @@ $nf_result = $conn->query("SELECT * FROM nf_pendente ORDER BY data_registro DESC
     <div class="usuario-logado">
       <?php echo htmlspecialchars($_SESSION['nome_usuario']); ?>
     </div>
-  <?php endif; ?>
+
+    <?php endif; ?>
+    
+    <?php 
+  include '../base/rodape.php';
+  ?>
 </body>
 </html>

@@ -158,13 +158,15 @@ function toggleExpand(id) {
 </div>
 
 <footer>
-    &copy; 2025 Fertiquim Fertilizantes. Todos os direitos reservados.
     <?php if (isset($_SESSION['nome_usuario']) && isset($_SESSION['funcao_usuario'])): ?>
         <div class="usuario-logado">
             <?php echo htmlspecialchars($_SESSION['nome_usuario']); ?>
         </div>
     <?php endif; ?>
 </footer>
+  <?php 
+  include '../base/rodape.php';
+  ?>
 </body>
 </html>
 <?php $conn->close(); ?>

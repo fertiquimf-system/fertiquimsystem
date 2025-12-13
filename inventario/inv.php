@@ -33,9 +33,9 @@ if (!isset($_SESSION['nome_usuario'])) {
     </div>
   </div>
 
-  <footer>
-    &copy; 2025 Fertiquim Fertilizantes. Todos os direitos reservados.
-  </footer>
+    <?php 
+  include '../base/rodape.php';
+  ?>
   <?php if (isset($_SESSION['nome_usuario']) && isset($_SESSION['funcao_usuario'])): ?>
     <div class="usuario-logado">
       <?php echo htmlspecialchars($_SESSION['nome_usuario']); ?>

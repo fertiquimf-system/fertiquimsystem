@@ -18,7 +18,7 @@ restringirAcesso(['Administrador', 'Proprietario', 'Vendedores']);
   <div class="container">
     <h2 class="titulo">Painel Principal</h2>
     <div class="cards">
-      <a href="vendas_tonelada.php"" class="card VendasInternas-card">
+      <a href="vendas_tonelada.php" class="card VendasInternas-card">
         <h2></h2>
       </a>
       <a href="vendas_sacaria.php" class="card VendasExternas-card">
@@ -35,11 +35,7 @@ restringirAcesso(['Administrador', 'Proprietario', 'Vendedores']);
 
     </div>
   </div>
-
-  <footer>
-    &copy; 2025 Fertiquim Fertilizantes. Todos os direitos reservados.
-  </footer>
-
+  <?php include '../base/rodape.php'; ?>
   <?php if (isset($_SESSION['nome_usuario']) && isset($_SESSION['funcao_usuario'])): ?>
     <div class="usuario-logado">
       <?php echo htmlspecialchars($_SESSION['nome_usuario']); ?>

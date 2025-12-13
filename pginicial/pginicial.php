@@ -26,13 +26,14 @@ if (!isset($_SESSION['nome_usuario'])) {
       <a href="../financeiro/financeiro.php" class="card financeiro-card">
         <h2></h2>
       </a>
+      
       <a href="../rh/rh.php" class="card rh-card">
         <h2></h2>
       </a>
       <a href="../vendedores/vendedores.php" class="card vendas-card">
         <h2></h2>
       </a>
-      <a href="../estoque/estoquevisu.php" class="card almoxarifado-card">
+      <a href="../estoque/estoque_inicial.php" class="card almoxarifado-card">
         <h2></h2>
       </a>
       <a href="../carregamento/carregamento.php" class="card carregamento-card">

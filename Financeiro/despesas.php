@@ -166,5 +166,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       <?php echo htmlspecialchars($_SESSION['nome_usuario']); ?>
     </div>
   <?php endif; ?>
+  
 </body>
 </html>

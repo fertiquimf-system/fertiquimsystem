@@ -18,7 +18,19 @@ $sql = "
         s.peso_saida AS peso,
         s.data_saida AS data_registro
     FROM balanca_saida s
-    LEFT JOIN balanca_entrada e ON s.placa = e.placa
+    
+    -- Seleciona somente a ÚLTIMA entrada para cada placa
+    LEFT JOIN (
+        SELECT 
+            placa,
+            MAX(id) AS max_id
+        FROM balanca_entrada
+        GROUP BY placa
+    ) ult ON ult.placa = s.placa
+
+    -- Junta a entrada correta (somente 1)
+    LEFT JOIN balanca_entrada e ON e.id = ult.max_id
+
     ORDER BY s.data_saida DESC
 ";
 $registros = $conn->query($sql);
@@ -67,13 +79,18 @@ $registros = $conn->query($sql);
     <td><?= number_format($row['peso'], 0, ',', '.') ?></td>
     <td><?= date("d/m/Y H:i", strtotime($row['data_registro'])) ?></td>
     <td>
-      <button class="btn btn-green" onclick="window.location.href='gerar_canhoto.php?tipo=saida&id=<?= $row['id'] ?>'">
-        🧾 Gerar Canhoto
-      </button>
+<button 
+  class="btn btn-green" 
+  onclick="window.open('gerar_canhoto.php?tipo=saida&id=<?= $row['id'] ?>', '_blank')"
+>
+  🧾 Gerar Canhoto
+</button>
     </td>
   </tr>
   <?php endwhile; ?>
 </table>
-
+  <?php 
+  include '../base/rodape.php';
+  ?>
 </body>
 </html>

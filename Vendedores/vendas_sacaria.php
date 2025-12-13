@@ -156,9 +156,9 @@ while($row = $resProdutos->fetch_assoc()){
   </form>
 </div>
 
-<footer style="text-align:center; padding:20px; background:#dcdcdc;">
-  &copy; 2025 Fertiquim Fertilizantes. Todos os direitos reservados.
-</footer>
+  <?php 
+  include '../base/rodape.php';
+  ?>
 
 <script>
 function addItem() {

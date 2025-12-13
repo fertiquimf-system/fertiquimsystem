@@ -90,5 +90,8 @@ setInterval(() => {
   cam.src = "camera.php?" + new Date().getTime();
 }, 1000);
 </script>
+  <?php 
+  include '../base/rodape.php';
+  ?>
 </body>
 </html>
