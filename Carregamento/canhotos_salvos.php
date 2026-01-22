@@ -42,53 +42,135 @@ $registros = $conn->query($sql);
   <title>Canhotos Salvos</title>
   <link rel="stylesheet" href="../css/estilo.css"/>
 <style>
-  table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-  th, td { padding: 12px; border: 1px solid #2d2d2d; text-align: center; }
-  
-  th { background: #4CAF50; color: #fff; font-weight: bold; }
-  tr:nth-child(even) { background: #fff; }
-  tr:nth-child(odd) { background: #fff; }
-  tr:hover { background: #3c3c3c; color: #fff; }
+/* ====== TABELA ====== */
+.table-container {
+  margin-top: 20px;
+  overflow-x: auto;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,.15);
+}
 
-  .btn { padding: 8px 14px; border: none; border-radius: 6px; cursor: pointer; font-size: 14px; }
-  .btn-green { background: #4CAF50; color: #fff; }
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  font-size: 14px;
+}
+
+/* Cabeçalho */
+th {
+  background: linear-gradient(135deg, #4CAF50, #3e9142);
+  color: #fff;
+  padding: 14px;
+  text-transform: uppercase;
+  font-size: 13px;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+
+/* Células */
+td {
+  padding: 12px;
+  border-bottom: 1px solid #e0e0e0;
+  text-align: center;
+  color: #333;
+}
+
+/* Linhas */
+tr:nth-child(even) {
+  background: #f9f9f9;
+}
+
+tr:hover {
+  background: #e8f5e9;
+  transition: background 0.2s ease-in-out;
+}
+
+/* ====== BOTÕES ====== */
+.btn {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s ease-in-out;
+}
+
+.btn-green {
+  background: #4CAF50;
+  color: #fff;
+}
+
+.btn-green:hover {
+  background: #3e9142;
+  transform: scale(1.05);
+}
+
+/* ====== TÍTULO ====== */
+h1 {
+  margin-top: 20px;
+  font-size: 22px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ====== RESPONSIVO ====== */
+@media (max-width: 768px) {
+  th, td {
+    padding: 10px;
+    font-size: 12px;
+  }
+
+  h1 {
+    font-size: 18px;
+  }
+}
 </style>
 </head>
 <body>
 <?php include '../base/cabecalho.php'; ?>
 
 <h1>📑 Canhotos Salvos</h1>
-<table>
-  <tr>
-    <th>ID</th>
-    <th>Tipo</th>
-    <th>Marca</th>
-    <th>Placa</th>
-    <th>Motorista</th>
-    <th>Peso (kg)</th>
-    <th>Data</th>
-    <th>Ações</th>
-  </tr>
-  <?php while ($row = $registros->fetch_assoc()): ?>
-  <tr>
-    <td><?= $row['id'] ?></td>
-    <td><?= $row['tipo'] ?></td>
-    <td><?= $row['marca'] ?></td>
-    <td><?= $row['placa'] ?></td>
-    <td><?= $row['motorista'] ?></td>
-    <td><?= number_format($row['peso'], 0, ',', '.') ?></td>
-    <td><?= date("d/m/Y H:i", strtotime($row['data_registro'])) ?></td>
-    <td>
-<button 
-  class="btn btn-green" 
-  onclick="window.open('gerar_canhoto.php?tipo=saida&id=<?= $row['id'] ?>', '_blank')"
->
-  🧾 Gerar Canhoto
-</button>
-    </td>
-  </tr>
-  <?php endwhile; ?>
-</table>
+<div class="table-container">
+  <table>
+    <tr>
+      <th>ID</th>
+      <th>Tipo</th>
+      <th>Marca</th>
+      <th>Placa</th>
+      <th>Motorista</th>
+      <th>Peso (kg)</th>
+      <th>Data</th>
+      <th>Ações</th>
+    </tr>
+
+    <?php while ($row = $registros->fetch_assoc()): ?>
+    <tr>
+      <td><?= $row['id'] ?></td>
+      <td><?= $row['tipo'] ?></td>
+      <td><?= $row['marca'] ?></td>
+      <td><strong><?= $row['placa'] ?></strong></td>
+      <td><?= $row['motorista'] ?></td>
+      <td><?= number_format($row['peso'], 0, ',', '.') ?></td>
+      <td><?= date("d/m/Y H:i", strtotime($row['data_registro'])) ?></td>
+      <td>
+        <button 
+          class="btn btn-green"
+          onclick="window.open('gerar_canhoto.php?tipo=saida&id=<?= $row['id'] ?>', '_blank')"
+        >
+          🧾 Canhoto
+        </button>
+      </td>
+    </tr>
+    <?php endwhile; ?>
+  </table>
+</div>
   <?php 
   include '../base/rodape.php';
   ?>

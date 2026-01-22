@@ -42,6 +42,11 @@ if (!isset($_SESSION['nome_usuario'])) {
       <a href="../deposito/deposito.php" class="card deposito-card">
       <h2></h2>
       </a>
+
+      <a href="../frota/frota.php" class="card frota-card">
+     <h2></h2>
+     </a>
+
     </div>
   </div>
   <?php 

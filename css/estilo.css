@@ -244,3 +244,7 @@ nav a {
 .ConsultarNF-card { background: url('../img/ConsultarNF.png') no-repeat center/cover; }
 .PendenteNF-card { background: url('../img/PendenteNF.png') no-repeat center/cover; }
 .consultarcanhoto-card { background: url('../img/consultarcanhoto.png') no-repeat center/cover; }
+.checking-card { background: url('../img/cheking.png') no-repeat center/cover; }
+.gerar_checking-card { background: url('../img/gerar_checking.png') no-repeat center/cover; }
+.consultar_checking-card { background: url('../img/consultar_checking.png') no-repeat center/cover; }
+

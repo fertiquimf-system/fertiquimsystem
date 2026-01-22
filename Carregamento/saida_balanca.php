@@ -28,7 +28,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['acao']) && $_POST['ac
 }
 
 // Buscar placas já registradas na entrada
-$placas = $conn->query("SELECT placa FROM balanca_entrada");
+$placas = $conn->query("
+    SELECT DISTINCT placa 
+    FROM balanca_entrada 
+    WHERE DATE(data_entrada) = CURDATE()
+");
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">

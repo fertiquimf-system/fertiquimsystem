@@ -40,6 +40,10 @@ if (!isset($_SESSION['nome_usuario'])) {
      <h2></h2>
      </a>
 
+     <a href="checkup.php" class="card checking-card">
+     <h2></h2>
+     </a>
+
     </div>
   </div>
   <?php 
