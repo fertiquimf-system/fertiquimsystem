@@ -27,10 +27,10 @@ if (!isset($_SESSION['nome_usuario'])) {
         <h2></h2>
       </a>
       
-      <a href="../etiquetas/documento.php" class="card rh-card">
+      <a href="../etiquetas/documento.php" class="card utilizar_etiqueta-card">
         <h2></h2>
       </a>
-      <a href="../vendedores/vendedores.php" class="card vendas-card">
+      <a href="../etiquetas/consultar_doc.php" class="card consultar_etiqueta-card">
         <h2></h2>
       </a>
 

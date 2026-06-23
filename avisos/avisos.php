@@ -1,27 +1,8 @@
 <?php
 
-$aviso = "🚀 Nova versão do sistema disponível! 
-
-            *Alguns Ajustes visuais realizados
-
-            *Ajustes de desing!
-
-            *Inserção de Extrato no setor Administrador
-
-            FUTUROS AJUSTES A SEREM REALIZADOS
-
-            *Novos Ajustes Visuais estão sendo implementados 
-            com a principal ideia de deixar o sistema mais fluido
-
-            *Ajustes no controle de estoque visual e operacional
-            
-            *Serão adicionados mais opções de relatórios no estoque 
-            dando mais opções de impressão
-
-            *Solicito por gentileza para enviarem sugestões de melhorias
-            1x por semana do sistema, o mesmo voltou recentemente a ser atualizado
-            desde já agradecido
-
+$aviso = "🚀 Nova versão do sistema disponível!
+              Bem vindos ao sistema da FERTIQUIM
+              de PARANAVAÍ PR
 
             * Email para contato : joao.v.s.satim@gmail.com 
             ";
