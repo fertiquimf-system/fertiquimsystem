@@ -25,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $stmt->bind_param("ssssssssssssssss", $tipo_pessoa, $nome_razao, $cpf_cnpj, $rg_ie, $data_nasc, $telefone, $celular, $email, $endereco, $numero, $complemento, $bairro, $cidade, $estado, $cep, $observacoes);
 
     if ($stmt->execute()) {
-        echo "<script>alert('Cliente cadastrado com sucesso!'); window.location.href='cadastro_cliente.php';</script>";
+        echo "<script>alert('Cliente cadastrado com sucesso!'); window.location.href='cliente.php';</script>";
     } else {
         echo "Erro: " . $stmt->error;
     }

@@ -292,7 +292,7 @@ $resultado = $conn->query("SELECT * FROM cadastro_funcionario ORDER BY nome ASC"
 
     <div>
         <label>Salário</label>
-        <input type="text" name="salario" value="<?= htmlspecialchars($f['salario']) ?>">
+        <input type="password" name="salario" placeholder="********">
     </div>
 
 </div>

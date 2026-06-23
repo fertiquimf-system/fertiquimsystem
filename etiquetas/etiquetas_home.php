@@ -21,35 +21,18 @@ if (!isset($_SESSION['nome_usuario'])) {
   ?>
 
   <div class="container">
-    <h2 class="titulo">Painel Principal</h2>
+    <h2 class="titulo">Controle de Etiquetas</h2>
     <div class="cards">
-      <a href="../financeiro/financeiro.php" class="card financeiro-card">
+      <a href="../etiquetas/etiquetas.php" class="card cadastrar_etiquetas-card">
         <h2></h2>
       </a>
       
-      <a href="../rh/rh.php" class="card rh-card">
+      <a href="../etiquetas/documento.php" class="card rh-card">
         <h2></h2>
       </a>
       <a href="../vendedores/vendedores.php" class="card vendas-card">
         <h2></h2>
       </a>
-      <a href="../estoque/estoque_inicial.php" class="card almoxarifado-card">
-        <h2></h2>
-      </a>
-      <a href="../carregamento/carregamento.php" class="card carregamento-card">
-        <h2></h2>
-      </a>
-      <a href="../deposito/deposito.php" class="card deposito-card">
-      <h2></h2>
-      </a>
-
-      <a href="../frota/frota.php" class="card frota-card">
-     <h2></h2>
-     </a>
-
-     <a href="../etiquetas/etiquetas_home.php" class="card etiquetas-card">
-     <h2></h2>
-     </a>
 
     </div>
   </div>

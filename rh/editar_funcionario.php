@@ -12,7 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit("Acesso proibido");
 }
 
-// Campos que o formulário envia
+// Campos obrigatórios (tiramos salario daqui)
 $campos_necessarios = [
     'id',
     'nome',
@@ -24,8 +24,7 @@ $campos_necessarios = [
     'endereco',
     'numero_casa',
     'cep',
-    'uf',
-    'salario'
+    'uf'
 ];
 
 foreach ($campos_necessarios as $campo) {
@@ -47,41 +46,76 @@ $endereco             = $_POST['endereco'];
 $numero_casa          = $_POST['numero_casa'];
 $cep                  = $_POST['cep'];
 $uf                   = $_POST['uf'];
-$salario              = $_POST['salario'];
+$salario              = $_POST['salario'] ?? '';
 
-// Atualizar banco
-$sql = "UPDATE cadastro_funcionario SET
-    nome = ?,
-    matricula_filial = ?,
-    matricula_funcionario = ?,
-    funcao = ?,
-    cpf = ?,
-    data_nascimento = ?,
-    endereco = ?,
-    numero_casa = ?,
-    cep = ?,
-    uf = ?,
-    salario = ?
-    WHERE id = ?";
+// 🔥 Montar SQL dinamicamente
+if (!empty($salario) && $salario !== '********') {
 
-$stmt = $conn->prepare($sql);
-$stmt->bind_param(
-    "ssssssssssdi",
-    $nome,
-    $matricula_filial,
-    $matricula_funcionario,
-    $funcao,
-    $cpf,
-    $data_nascimento,
-    $endereco,
-    $numero_casa,
-    $cep,
-    $uf,
-    $salario,
-    $id
-);
+    $sql = "UPDATE cadastro_funcionario SET
+        nome = ?,
+        matricula_filial = ?,
+        matricula_funcionario = ?,
+        funcao = ?,
+        cpf = ?,
+        data_nascimento = ?,
+        endereco = ?,
+        numero_casa = ?,
+        cep = ?,
+        uf = ?,
+        salario = ?
+        WHERE id = ?";
+
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param(
+        "ssssssssssdi",
+        $nome,
+        $matricula_filial,
+        $matricula_funcionario,
+        $funcao,
+        $cpf,
+        $data_nascimento,
+        $endereco,
+        $numero_casa,
+        $cep,
+        $uf,
+        $salario,
+        $id
+    );
+
+} else {
+
+    // 🚫 NÃO atualiza salário
+    $sql = "UPDATE cadastro_funcionario SET
+        nome = ?,
+        matricula_filial = ?,
+        matricula_funcionario = ?,
+        funcao = ?,
+        cpf = ?,
+        data_nascimento = ?,
+        endereco = ?,
+        numero_casa = ?,
+        cep = ?,
+        uf = ?
+        WHERE id = ?";
+
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param(
+        "ssssssssssi",
+        $nome,
+        $matricula_filial,
+        $matricula_funcionario,
+        $funcao,
+        $cpf,
+        $data_nascimento,
+        $endereco,
+        $numero_casa,
+        $cep,
+        $uf,
+        $id
+    );
+}
 
 $stmt->execute();
 
-echo ($stmt->affected_rows > 0) ? "sucesso" : "erro";
+echo ($stmt->affected_rows >= 0) ? "sucesso" : "erro";
 ?>

@@ -10,21 +10,23 @@ $telefone       = $_POST['telefone'];
 $endereco       = $_POST['endereco'];
 $cep            = $_POST['cep'];
 $responsavel    = $_POST['responsavel_entrega'];
+$revenda_matricula = $_POST['revenda_matricula'];
 
 // Iniciar transação
 $conn->begin_transaction();
 
 try {
     // Inserir venda
-    $sqlVenda = "INSERT INTO vendas 
-        (numero_venda, cliente, cpf_cnpj, telefone, endereco, cep, responsavel, data_venda, status)
-        VALUES (?, ?, ?, ?, ?, ?, ?, NOW(), 'pendente')";
+     $sqlVenda = "INSERT INTO vendas 
+        (numero_venda, cliente, revenda_matricula, cpf_cnpj, telefone, endereco, cep, responsavel, data_venda, status)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW(), 'pendente')";
+
 
     $stmt = $conn->prepare($sqlVenda);
     if(!$stmt){
         throw new Exception("Erro ao preparar venda: " . $conn->error);
     }
-    $stmt->bind_param("issssss", $numero_venda, $cliente, $cpf_cnpj, $telefone, $endereco, $cep, $responsavel);
+    $stmt->bind_param("isssssss", $numero_venda, $cliente, $revenda_matricula, $cpf_cnpj, $telefone, $endereco, $cep, $responsavel);
     $stmt->execute();
     $idVenda = $stmt->insert_id;
 
@@ -35,6 +37,7 @@ try {
     $tipos        = $_POST['tipo'];
     $valoresUnit  = $_POST['valor_unitario'];
     $valoresTot   = $_POST['valor_total'];
+    $revenda_matricula = $_POST['revenda_matricula'];
 
     $sqlItem = "INSERT INTO itens_venda 
         (id_venda, produto, quantidade, unidade, tipo, valor_unitario, valor_total) 

@@ -19,7 +19,7 @@ $resClientes = $conn->query($sqlClientes);
 // Buscar produtos do estoque (apenas Saca 50kg)
 $sqlProdutos = "SELECT id, nome_produto, unidade, tipo 
                 FROM deposito 
-                WHERE tipo = 'Sacarias 50kg'
+                WHERE tipo = 'toneladas/BigBag'
                 ORDER BY nome_produto";
 $resProdutos = $conn->query($sqlProdutos);
 
@@ -139,7 +139,7 @@ while($row = $resProdutos->fetch_assoc()){
             <input type="text" name="tipo[]" readonly>
           </div>
           <div class="form-group">
-            <label>Valor Unitário:</label>
+            <label>Valor p/ Tonelada:</label>
             <input type="number" name="valor_unitario[]" step="0.01" required oninput="atualizarTotal(this)">
           </div>
           <div class="form-group">
@@ -159,7 +159,7 @@ while($row = $resProdutos->fetch_assoc()){
   <?php 
   include '../base/rodape.php';
   ?>
-
+  
 <script>
 function addItem() {
   const container = document.getElementById('itens');

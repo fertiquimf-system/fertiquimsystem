@@ -1,7 +1,8 @@
 <?php
 require_once '../conexaohost/conexao.php';
 session_start();
-
+include('../sessao/verifica_sessao.php');
+restringirAcesso(['Administrador']);
 $cadastro_sucesso = false;
 
 if (isset($_POST['submit'])) {
