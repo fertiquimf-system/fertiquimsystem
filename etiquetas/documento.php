@@ -75,13 +75,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 |--------------------------------------------------------------------------
 */
 
-$etiquetas = mysqli_query(
-    $conn,
-    "SELECT *
-     FROM etiquetas
-     WHERE status='Disponivel'
-     ORDER BY numero_etiqueta ASC"
-);
+$filtroCor = $_GET['cor'] ?? 'Todas';
+
+$sqlEtiquetas = "
+    SELECT *
+    FROM etiquetas
+    WHERE status='Disponivel'
+";
+
+if ($filtroCor == 'Verde') {
+    $sqlEtiquetas .= " AND cor_etiqueta='Verde'";
+}
+
+if ($filtroCor == 'Amarela') {
+    $sqlEtiquetas .= " AND cor_etiqueta='Amarela'";
+}
+
+$sqlEtiquetas .= " ORDER BY numero_etiqueta ASC";
+
+$etiquetas = mysqli_query($conn, $sqlEtiquetas);
 
 $total_etiquetas = mysqli_num_rows($etiquetas);
 
@@ -236,6 +248,22 @@ body{
     <span id="contadorSelecionadas">0</span>
 </div>
 
+<div style="margin-bottom:20px;">
+
+    <a href="documento.php">
+        <button type="button">Todas</button>
+    </a>
+
+    <a href="documento.php?cor=Verde">
+        <button type="button">🟢 Verdes</button>
+    </a>
+
+    <a href="documento.php?cor=Amarela">
+        <button type="button">🟡 Amarelas</button>
+    </a>
+
+</div>
+
 <form method="POST">
 
     <div class="card-documento">
@@ -285,7 +313,14 @@ body{
                             value="<?= $row['id']; ?>"
                         >
 
-                        <?= htmlspecialchars($row['numero_etiqueta']); ?>
+                        <?php
+$iconeCor =
+    $row['cor_etiqueta'] == 'Verde'
+    ? '🟢'
+    : '🟡';
+?>
+
+<?= $iconeCor . ' ' . htmlspecialchars($row['numero_etiqueta']); ?>
 
                     </label>
 

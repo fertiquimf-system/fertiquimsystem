@@ -9,41 +9,65 @@ if (!isset($_SESSION['nome_usuario'])) {
 
 /*
 |--------------------------------------------------------------------------
-| CADASTRAR ETIQUETA
+| COR PADRÃO DAS ETIQUETAS
+|--------------------------------------------------------------------------
+*/
+
+if (!isset($_SESSION['cor_etiqueta'])) {
+    $_SESSION['cor_etiqueta'] = 'Verde';
+}
+
+/*
+|--------------------------------------------------------------------------
+| CADASTRAR ETIQUETA / ALTERAR COR
 |--------------------------------------------------------------------------
 */
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-    $numero = trim($_POST['numero_etiqueta']);
+    // Alterar cor padrão
+    if (isset($_POST['alterar_cor'])) {
 
-    if (!empty($numero)) {
+        $_SESSION['cor_etiqueta'] = $_POST['cor_etiqueta'];
 
-        $verifica = $conn->prepare("
-            SELECT id
-            FROM etiquetas
-            WHERE numero_etiqueta = ?
-        ");
-
-        $verifica->bind_param("s", $numero);
-        $verifica->execute();
-        $resultado = $verifica->get_result();
-
-        if ($resultado->num_rows == 0) {
-
-            $stmt = $conn->prepare("
-                INSERT INTO etiquetas
-                (numero_etiqueta)
-                VALUES (?)
-            ");
-
-            $stmt->bind_param("s", $numero);
-            $stmt->execute();
-        }
+        header("Location: etiquetas.php");
+        exit;
     }
 
-    header("Location: etiquetas.php");
-    exit;
+    // Cadastrar etiqueta
+    if (isset($_POST['numero_etiqueta'])) {
+
+        $numero = trim($_POST['numero_etiqueta']);
+        $cor = $_SESSION['cor_etiqueta'];
+
+        if (!empty($numero)) {
+
+            $verifica = $conn->prepare("
+                SELECT id
+                FROM etiquetas
+                WHERE numero_etiqueta = ?
+            ");
+
+            $verifica->bind_param("s", $numero);
+            $verifica->execute();
+            $resultado = $verifica->get_result();
+
+            if ($resultado->num_rows == 0) {
+
+                $stmt = $conn->prepare("
+                    INSERT INTO etiquetas
+                    (numero_etiqueta, cor_etiqueta)
+                    VALUES (?, ?)
+                ");
+
+                $stmt->bind_param("ss", $numero, $cor);
+                $stmt->execute();
+            }
+        }
+
+        header("Location: etiquetas.php");
+        exit;
+    }
 }
 
 /*
@@ -96,8 +120,12 @@ $etiquetas = mysqli_query($conn, $sql);
             flex-wrap:wrap;
         }
 
-        .bloco-cadastro input{
+        .bloco-cadastro input,
+        .bloco-cadastro select{
             padding:10px;
+        }
+
+        .bloco-cadastro input{
             width:300px;
         }
 
@@ -163,6 +191,32 @@ $etiquetas = mysqli_query($conn, $sql);
 
         <form method="POST">
 
+            <strong>Cor Atual:</strong>
+
+            <select name="cor_etiqueta">
+
+                <option value="Verde"
+                    <?= $_SESSION['cor_etiqueta'] == 'Verde' ? 'selected' : ''; ?>>
+                    🟢 Verde
+                </option>
+
+                <option value="Amarela"
+                    <?= $_SESSION['cor_etiqueta'] == 'Amarela' ? 'selected' : ''; ?>>
+                    🟡 Amarela
+                </option>
+
+            </select>
+
+            <button type="submit" name="alterar_cor">
+                Alterar Cor
+            </button>
+
+        </form>
+
+        <hr style="margin:15px 0;">
+
+        <form method="POST">
+
             <input
                 type="text"
                 name="numero_etiqueta"
@@ -201,6 +255,7 @@ $etiquetas = mysqli_query($conn, $sql);
             <tr>
                 <th>ID</th>
                 <th>Número da Etiqueta</th>
+                <th>Cor</th>
                 <th>Status</th>
                 <th>Data Cadastro</th>
             </tr>
@@ -215,6 +270,12 @@ $etiquetas = mysqli_query($conn, $sql);
                 <td><?= $row['id']; ?></td>
 
                 <td><?= htmlspecialchars($row['numero_etiqueta']); ?></td>
+
+                <td>
+                    <?= $row['cor_etiqueta'] == 'Verde'
+                        ? '🟢 Verde'
+                        : '🟡 Amarela'; ?>
+                </td>
 
                 <td>
 
