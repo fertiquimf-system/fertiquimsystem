@@ -42,28 +42,29 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         if (!empty($numero)) {
 
-            $verifica = $conn->prepare("
-                SELECT id
-                FROM etiquetas
-                WHERE numero_etiqueta = ?
-            ");
+    $verifica = $conn->prepare("
+        SELECT id
+        FROM etiquetas
+        WHERE numero_etiqueta = ?
+        AND cor_etiqueta = ?
+    ");
 
-            $verifica->bind_param("s", $numero);
-            $verifica->execute();
-            $resultado = $verifica->get_result();
+    $verifica->bind_param("ss", $numero, $cor);
+    $verifica->execute();
+    $resultado = $verifica->get_result();
 
-            if ($resultado->num_rows == 0) {
+    if ($resultado->num_rows == 0) {
 
-                $stmt = $conn->prepare("
-                    INSERT INTO etiquetas
-                    (numero_etiqueta, cor_etiqueta)
-                    VALUES (?, ?)
-                ");
+        $stmt = $conn->prepare("
+            INSERT INTO etiquetas
+            (numero_etiqueta, cor_etiqueta)
+            VALUES (?, ?)
+        ");
 
-                $stmt->bind_param("ss", $numero, $cor);
-                $stmt->execute();
-            }
-        }
+        $stmt->bind_param("ss", $numero, $cor);
+        $stmt->execute();
+    }
+}
 
         header("Location: etiquetas.php");
         exit;

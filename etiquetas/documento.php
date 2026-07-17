@@ -314,13 +314,13 @@ body{
                         >
 
                         <?php
-$iconeCor =
-    $row['cor_etiqueta'] == 'Verde'
-    ? '🟢'
-    : '🟡';
-?>
+                            $iconeCor =
+                            $row['cor_etiqueta'] == 'Verde'
+                             ? '🟢'
+                             : '🟡';
+    ?>
 
-<?= $iconeCor . ' ' . htmlspecialchars($row['numero_etiqueta']); ?>
+    <?= $iconeCor . ' ' . htmlspecialchars($row['numero_etiqueta']); ?>
 
                     </label>
 

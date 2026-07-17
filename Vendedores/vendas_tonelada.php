@@ -27,6 +27,11 @@ $produtos = [];
 while($row = $resProdutos->fetch_assoc()){
   $produtos[] = $row;
 }
+
+$sqlRevendas = "SELECT id, matricula, nome FROM revenda ORDER BY nome";
+
+$resRevendas = $conn->query($sqlRevendas);
+
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -79,6 +84,17 @@ while($row = $resProdutos->fetch_assoc()){
             <?php endwhile; ?>
           </select>
         </div>
+
+             <div class="form-group">
+               <label>Revendedor:</label> 
+               <select name="revendedor_id" required>
+                 <option value="">Selecione</option> 
+                 <?php while($r = $resRevendas->fetch_assoc()): ?> 
+                  <option value="<?php echo $r['id']; ?>">
+                     <?php echo $r['nome']; ?> - Mat: <?php echo $r['matricula']; ?> </option> <?php endwhile; ?> 
+                    </select> 
+                  </div>
+        
         <div class="form-group">
           <label>CPF/CNPJ:</label>
           <input type="text" id="cpf_cnpj" readonly>
