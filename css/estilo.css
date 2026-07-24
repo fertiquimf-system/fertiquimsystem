@@ -1,0 +1,254 @@
+/* ============================================
+   VARIÁVEIS DE TEMA
+============================================ */
+:root {
+  --verde-claro: #A7D129;
+  --verde-escuro: #225B0B;
+  --dourado: #C9A14A;
+  --cinza-claro: #f3f3f3;
+  --branco: #ffffff;
+  --cinza-medio: #dcdcdc;
+
+  --shadow-soft: 0 3px 10px rgba(0,0,0,0.10);
+  --shadow-hover: 0 6px 18px rgba(0,0,0,0.20);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  background: linear-gradient(rgba(255,255,255,0.6), rgba(255,255,255,0.6)),
+              url('../img/logobeltrao.png') no-repeat center center/cover;
+  color: #333;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* ============================================
+   CABEÇALHO
+============================================ */
+header {
+  background-color: var(--verde-escuro);
+  color: var(--branco);
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+header h1 {
+  font-size: 24px;
+}
+
+nav a {
+  color: var(--branco);
+  margin-left: 20px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+/* ============================================
+   CONTAINER
+============================================ */
+.container {
+  padding: 40px;
+  flex: 1;
+}
+
+.titulo {
+  margin-bottom: 20px;
+  font-size: 26px;
+  font-weight: bold;
+  color: var(--verde-escuro);
+}
+
+/* ============================================
+   GRID DE CARDS (RESPONSIVO + BONITO)
+============================================ */
+.cards {
+ display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 25px;
+  padding: 20px;
+  width: 100%;
+}
+
+.card {
+  position: relative;
+  width: 260px;
+  height: 150px;
+  border-radius: 20px;
+  overflow: hidden;
+  background-color: var(--branco);
+  box-shadow: var(--shadow-soft);
+  transition: all .35s ease;
+  border-left: 8px solid var(--verde-claro);
+}
+
+.card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: var(--shadow-hover);
+}
+
+.card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.22);
+  transition: 0.35s ease-in-out;
+}
+
+.card:hover::before {
+  background: rgba(0,0,0,0.13);
+}
+
+/* Texto dos cards */
+.card h2 {
+  position: absolute;
+  bottom: 12px;
+  left: 14px;
+  padding: 6px 14px;
+  background: rgba(0,0,0,0.55);
+  color: #fff;
+  border-radius: 6px;
+  font-size: 18px;
+  font-weight: 600;
+  backdrop-filter: blur(4px);
+}
+
+/* ============================================
+   TABELAS E FORMULÁRIOS
+============================================ */
+.formulario {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 30px;
+}
+
+.formulario input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  flex: 1;
+  min-width: 180px;
+}
+
+.formulario button {
+  background-color: var(--verde-claro);
+  color: #000;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.formulario button:hover {
+  background-color: var(--verde-escuro);
+  color: var(--branco);
+}
+
+.tabela {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: var(--branco);
+  box-shadow: var(--shadow-soft);
+}
+
+.tabela th, .tabela td {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--cinza-medio);
+  text-align: left;
+}
+
+.tabela th {
+  background-color: var(--verde-claro);
+}
+
+/* ============================================
+   RODAPÉ
+============================================ */
+.rodape {
+  margin-top: auto;
+  background: #eee;
+  text-align: center;
+  padding: 15px 0;
+  font-size: 14px;
+  color: #333;
+}
+
+/* ============================================
+   TAG DO USUÁRIO LOGADO
+============================================ */
+.usuario-logado {
+  position: fixed;
+  bottom: 10px;
+  left: 10px;
+  background-color: rgba(0, 0, 0, 0.75);
+  color: #fff;
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-family: Arial, sans-serif;
+  z-index: 999;
+}
+
+/* ============================================
+   BACKGROUNDS DOS CARDS
+============================================ */
+.almoxarifado-card { background: url('../img/Almoxarifado.png') no-repeat center/cover; }
+.rh-card { background: url('../img/RecursosHumanos.png') no-repeat center/cover; }
+.vendas-card { background: url('../img/vendas.png') no-repeat center/cover; }
+.financeiro-card { background: url('../img/Financeiro.png') no-repeat center/cover; }
+.cadastro-card { background: url('../img/Cadastro.png') no-repeat center/cover; }
+.consulta-card { background: url('../img/Consulta.png') no-repeat center/cover; }
+.cadastrosystem-card { background: url('../img/cadastrosystem.png') no-repeat center/cover; }
+.carregamento-card { background: url('../img/Carregamento.png') no-repeat center/cover; }
+.inserirmaterial-card { background: url('../img/inserirmaterial.png') no-repeat center/cover; }
+.consultarinventario-card { background: url('../img/consultarinventario.png') no-repeat center/cover; }
+.editarinventario-card { background: url('../img/editarinventario.png') no-repeat center/cover; }
+.treinamento-card { background: url('../img/treinamento.png') no-repeat center/cover; }
+.VendasInternas-card { background: url('../img/VendasInternas.png') no-repeat center/cover; }
+.VendasExternas-card { background: url('../img/VendasExternas.png') no-repeat center/cover; }
+.Clientes-card { background: url('../img/clientes.png') no-repeat center/cover; }
+.Cadastrar_clientes-card { background: url('../img/Cadastrar_clientes.png') no-repeat center/cover; }
+.Consultar_clientes-card { background: url('../img/Consultar_cliente.png') no-repeat center/cover; }
+.Despesas-card { background: url('../img/DESPESAS.png') no-repeat center/cover; }
+.Consultar_Despesas-card { background: url('../img/Consultar_despesas.png') no-repeat center/cover; }
+.frota-card { background: url('../img/frota.png') no-repeat center/cover; }
+.registrar_veiculo-card { background: url('../img/registrar_veiculo.png') no-repeat center/cover; }
+.controle_consumo-card { background: url('../img/controle_consumo.png') no-repeat center/cover; }
+.Venda_pendente-card { background: url('../img/vendas_pendente.png') no-repeat center/cover; }
+.entrada_balanca-card { background: url('../img/entrada_balanca.png') no-repeat center/cover; }
+.saida_balanca-card { background: url('../img/saida_balanca.png') no-repeat center/cover; }
+.deposito-card { background: url('../img/deposito.png') no-repeat center/cover; }
+.lucro-card { background: url('../img/LUCRO.png') no-repeat center/cover; }
+.prejuizo-card { background: url('../img/prejuizo.png') no-repeat center/cover; }
+.relatorio-card { background: url('../img/RELATORIO.png') no-repeat center/cover; }
+.consultar_estoque-card { background: url('../img/consultar_estoque.png') no-repeat center/cover; }
+.inventario-card { background: url('../img/inventario.png') no-repeat center/cover; }
+.editarestoque-card { background: url('../img/editarestoque.png') no-repeat center/cover; }
+.InserirNF-card { background: url('../img/InserirNF.png') no-repeat center/cover; }
+.ConsultarNF-card { background: url('../img/ConsultarNF.png') no-repeat center/cover; }
+.PendenteNF-card { background: url('../img/PendenteNF.png') no-repeat center/cover; }
+.consultarcanhoto-card { background: url('../img/consultarcanhoto.png') no-repeat center/cover; }
+.checking-card { background: url('../img/cheking.png') no-repeat center/cover; }
+.gerar_checking-card { background: url('../img/gerar_checking.png') no-repeat center/cover; }
+.consultar_checking-card { background: url('../img/consultar_checking.png') no-repeat center/cover; }
+.cadastrar_revenda-card { background: url('../img/cadastrar_revenda.png') no-repeat center/cover; }
+.etiquetas-card { background: url('../img/etiquetas.png') no-repeat center/cover; }
+.cadastrar_etiquetas-card { background: url('../img/cadastrar_etiquetas.png') no-repeat center/cover; }
+.utilizar_etiqueta-card { background: url('../img/utilizar_etiqueta.png') no-repeat center/cover; }
+.consultar_etiqueta-card { background: url('../img/consultar_etiqueta.png') no-repeat center/cover; }

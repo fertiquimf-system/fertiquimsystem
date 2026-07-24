@@ -1,0 +1,20 @@
+CREATE TABLE clientes (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    tipo_pessoa ENUM('FISICA','JURIDICA') NOT NULL,
+    nome_razao VARCHAR(150) NOT NULL,
+    cpf_cnpj VARCHAR(20) NOT NULL UNIQUE,
+    rg_ie VARCHAR(20) NULL,
+    data_nascimento DATE NULL,
+    telefone VARCHAR(20) NOT NULL,
+    celular VARCHAR(20) NULL,
+    email VARCHAR(120) NULL,
+    endereco VARCHAR(200) NOT NULL,
+    numero VARCHAR(10) NULL,
+    complemento VARCHAR(100) NULL,
+    bairro VARCHAR(100) NOT NULL,
+    cidade VARCHAR(100) NOT NULL,
+    estado CHAR(2) NOT NULL,
+    cep VARCHAR(10) NOT NULL,
+    observacoes TEXT NULL,
+    data_cadastro TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);

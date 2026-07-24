@@ -1,0 +1,11 @@
+CREATE TABLE frota_veiculos (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  placa VARCHAR(20) NOT NULL,
+  modelo VARCHAR(50) NOT NULL,
+  marca VARCHAR(50) NOT NULL,
+  ano INT NOT NULL,
+  tipo VARCHAR(20) NOT NULL,
+  status VARCHAR(20) NOT NULL,
+  data_cadastro DATETIME NOT NULL,
+  usuario VARCHAR(50) NOT NULL
+);
