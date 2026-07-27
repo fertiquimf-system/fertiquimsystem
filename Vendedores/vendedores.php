@@ -21,9 +21,6 @@ restringirAcesso(['Administrador', 'Proprietario', 'Vendedores']);
       <a href="vendas_tonelada.php" class="card VendasInternas-card">
         <h2></h2>
       </a>
-      <a href="vendas_sacaria.php" class="card VendasExternas-card">
-        <h2></h2>
-      </a>
         
       <a href="../cliente/cliente.php" class="card Clientes-card">
       <h2></h2>  
@@ -34,6 +31,10 @@ restringirAcesso(['Administrador', 'Proprietario', 'Vendedores']);
       </a>
       
       <a href="../cliente/cadastro_revenda.php" class="card cadastrar_revenda-card">
+      <h2></h2>  
+      </a>
+      
+      <a href="vendas_revendedores.php" class="card controle_revenda-card">
       <h2></h2>  
       </a>
 
