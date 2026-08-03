@@ -352,59 +352,50 @@ if($idRevendedor==0){
 <?php
 
 $sqlItens = "
-
-SELECT *
-
-FROM itens_venda
-
-WHERE id_venda=".$v['id_venda'];
+SELECT
+    i.*,
+    COALESCE(p.total_pago, 0) AS valor_pago
+FROM itens_venda i
+LEFT JOIN (
+    SELECT
+        id_venda,
+        SUM(valor_pago) AS total_pago
+    FROM pagamentos_venda
+    GROUP BY id_venda
+) p ON p.id_venda = i.id_venda
+WHERE i.id_venda = ".$v['id_venda'];
 
 $resItens = $conn->query($sqlItens);
 
 while($i = $resItens->fetch_assoc()){
-
 ?>
 
 <tr class="item-row item-<?php echo $v['id_venda']; ?>">
 
     <td colspan="2">
-
         <strong>Produto:</strong>
-
         <?php echo $i['produto']; ?>
-
     </td>
 
     <td>
-
         Qtd:
-
         <?php echo $i['quantidade']; ?>
-
     </td>
 
     <td>
-
-        <?php echo $i['unidade']; ?>
-
+        <strong>Pago:</strong>
+        R$ <?php echo number_format($i['valor_pago'], 2, ",", "."); ?>
     </td>
 
     <td>
-
         <?php echo $i['tipo']; ?>
-
     </td>
 
     <td>
-
         <strong>
-
-        R$
-
-        <?php echo number_format($i['valor_total'],2,",","."); ?>
-
+            R$
+            <?php echo number_format($i['valor_total'], 2, ",", "."); ?>
         </strong>
-
     </td>
 
 </tr>
@@ -424,5 +415,4 @@ while($i = $resItens->fetch_assoc()){
 <?php include '../base/rodape.php'; ?>
 
 </body>
-
 </html>
