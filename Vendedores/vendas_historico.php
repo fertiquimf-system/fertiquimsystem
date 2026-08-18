@@ -477,9 +477,13 @@ Dados da Venda
 <?php
 
 $sqlItens = "
-SELECT *
-FROM itens_venda
-WHERE id_venda=".$v['id_venda'];
+SELECT 
+    iv.*,
+    d.nome_produto
+FROM itens_venda iv
+LEFT JOIN deposito d 
+    ON d.id = iv.produto
+WHERE iv.id_venda=".$v['id_venda'];
 
 $resItens = $conn->query($sqlItens);
 
@@ -488,8 +492,8 @@ while($i = $resItens->fetch_assoc()){
 ?>
 
 <tr>
-
-    <td><?= $i['produto']; ?></td>
+  
+    <td><?= htmlspecialchars($i['nome_produto'] ?? 'Produto não encontrado'); ?></td>
 
     <td><?= $i['quantidade']; ?></td>
 

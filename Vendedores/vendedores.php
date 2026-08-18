@@ -38,6 +38,10 @@ restringirAcesso(['Administrador', 'Proprietario', 'Vendedores']);
       <h2></h2>  
       </a>
 
+      <a href="vendas_historico.php" class="card ajuste_vendas-card">
+      <h2></h2>  
+      </a>
+
     </div>
   </div>
   <?php include '../base/rodape.php'; ?>

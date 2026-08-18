@@ -180,22 +180,52 @@ Registrar Pagamento
         <button class="btn btn-remove" onclick="removerVenda(<?php echo $v['id_venda']; ?>)">Remover</button>
       </td>
     </tr>
-    <?php
-      // Buscar itens da venda
-      $sqlItens = "SELECT * FROM itens_venda WHERE id_venda = ".$v['id_venda'];
-      $resItens = $conn->query($sqlItens);
-      while($i = $resItens->fetch_assoc()):
-    ?>
-    <tr class="item-row item-of-<?php echo $v['id_venda']; ?>">
-      <td colspan="2"><strong>Produto:</strong> <?php echo $i['produto']; ?></td>
-      <td>Qtd: <?php echo $i['quantidade']; ?></td>
-      <td>Unidade: <?php echo $i['unidade']; ?></td>
-      <td>Tipo: <?php echo $i['tipo']; ?></td>
-      <td>Valor Unit.: <?php echo number_format($i['valor_unitario'],2); ?></td>
-      <td colspan="2">Total: <?php echo number_format($i['valor_total'],2); ?></td>
-      <td></td>
-    </tr>
-    <?php endwhile; ?>
+<?php
+  // Buscar itens da venda + nome do produto
+  $sqlItens = "
+      SELECT 
+          iv.*,
+          e.nome_produto
+      FROM itens_venda iv
+      LEFT JOIN deposito e 
+          ON e.id = iv.produto
+      WHERE iv.id_venda = ".$v['id_venda'];
+
+  $resItens = $conn->query($sqlItens);
+
+  while($i = $resItens->fetch_assoc()):
+?>
+<tr class="item-row item-of-<?php echo $v['id_venda']; ?>">
+    <td colspan="2">
+        <strong>Produto:</strong>
+        <?php echo htmlspecialchars($i['nome_produto'] ?? 'Produto não encontrado'); ?>
+    </td>
+
+    <td>
+        Qtd: <?php echo $i['quantidade']; ?>
+    </td>
+
+    <td>
+        Unidade: <?php echo $i['unidade']; ?>
+    </td>
+
+    <td>
+        Tipo: <?php echo $i['tipo']; ?>
+    </td>
+
+    <td>
+        Valor Unit.:
+        R$ <?php echo number_format($i['valor_unitario'], 2, ',', '.'); ?>
+    </td>
+
+    <td colspan="2">
+        Total:
+        R$ <?php echo number_format($i['valor_total'], 2, ',', '.'); ?>
+    </td>
+
+    <td></td>
+</tr>
+<?php endwhile; ?>
 <?php endwhile; ?>
   </tbody>
 </table>

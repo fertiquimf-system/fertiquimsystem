@@ -2,9 +2,6 @@
 require_once '../conexaohost/conexao.php';
 session_start();
 
-include('../sessao/verifica_sessao.php');
-restringirAcesso(['Gerencia', 'Administrador', 'Proprietario']);
-
 if (!isset($_SESSION['nome_usuario'])) {
     header("Location: ../pglogin/pglogin.php");
     exit;
@@ -17,32 +14,22 @@ if (!isset($_SESSION['nome_usuario'])) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Fertiquim - Sistema</title>
   <link rel="stylesheet" href="../css/estilo.css" />
-
 </head>
 <body>
-  <header>
-    <h1>FERTIQUIM Fertilizantes</h1>
-    <nav>
-      <a href="../pginicial/pginicial.php">Início</a>
-      <a href="../pglogin/pglogin.php">Sair</a>
-    </nav>
-  </header>
+  <?php 
+  include '../base/cabecalho.php';
+  ?>
 
   <div class="container">
     <h2 class="titulo">Painel Principal</h2>
     <div class="cards">
-
-     <a href="controle_de_frota.php" class="card registrar_veiculo-card">
-     <h2></h2>
-     </a>
-
-     <a href="controle_de_combustivel.php" class="card controle_consumo-card">
-     <h2></h2>
-     </a>
-
-     <a href="checkup.php" class="card checking-card">
-     <h2></h2>
-     </a>
+      <a href="consumivel.php" class="card termo-card">
+        <h2></h2>
+      </a>
+      
+      <a href="termo.php" class="card epi-card">
+        <h2></h2>
+      </a>
 
     </div>
   </div>
@@ -55,5 +42,9 @@ if (!isset($_SESSION['nome_usuario'])) {
       <?php echo htmlspecialchars($_SESSION['nome_usuario']); ?>
     </div>
   <?php endif; ?>
+
+  <!-- Avisos -->
+  <?php include '../avisos/avisos.php'; ?>
+
 </body>
 </html>
