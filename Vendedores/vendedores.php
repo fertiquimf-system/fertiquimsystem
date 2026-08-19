@@ -26,10 +26,6 @@ restringirAcesso(['Administrador', 'Proprietario', 'Vendedores']);
       <h2></h2>  
       </a>
 
-      <a href="pendente.php" class="card Venda_pendente-card">
-      <h2></h2>  
-      </a>
-      
       <a href="../cliente/cadastro_revenda.php" class="card cadastrar_revenda-card">
       <h2></h2>  
       </a>

@@ -4,7 +4,7 @@ $aviso = "🚀 Nova versão do sistema disponível!
               Bem vindos ao sistema da FERTIQUIM
               de PARANAVAÍ PR
 
-            * Email para contato : joao.v.s.satim@gmail.com 
+             
             ";
 ?>
 
