@@ -16,7 +16,6 @@ O sistema foi desenvolvido com foco em facilitar o controle de estoque, depósit
 * **XAMPP** — Ambiente de desenvolvimento local
 * **Apache** — Servidor web
 * **phpMyAdmin** — Gerenciamento do banco de dados
-* **Dompdf** — Geração de documentos PDF
 
 ---
 
@@ -33,23 +32,32 @@ A estrutura pode conter módulos semelhantes a:
 ```text
 fertiquim/
 │
-├── deposito/
-├── vendas/
-├── estoque/
-├── clientes/
-├── revendedores/
-├── funcionarios/
-├── balanca/
-├── etiquetas/
-├── drive/
-├── login/
-├── includes/
-├── assets/
+├── admin/
+├── avisos/
+├── base/
+├── carregamento/
+├── cliente/
+├── conexaohost/
+├── consumivel/
 ├── css/
-├── js/
-│
-├── index.php
-├── conexao.php
+├── deposito/
+├── drive/
+├── estoque/
+├── eiquetas/
+├── financeiro/
+├── frota/
+├── img/
+├── inventario/
+├── manutencao/
+├── nf/
+├── pginicial/
+├── pglogin/
+├── pgreg/
+├── rh/
+├── sessao/
+├── sql/
+├── treinamento/
+├── vendedores/
 └── ...
 ```
 
@@ -70,17 +78,28 @@ fertiquim
 Entre as tabelas utilizadas no sistema estão:
 
 ```text
-clientes
-estoque
-estoque_fertilizantes
-inventario_funcionario
-usuarios
-vendas
 balanca_entrada
 balanca_saida
-etiquetas
+cadastro_funcionario
+clientes
+controle_combustível
+deposito
+documentos
+documento_etiqueta
+entradas
+estoque_fertilizantes
+fertilizantes_aceitos
+fertilizantes_pendentes
+frota_veiculos
+inventario_funcionario
+itens_venda
+nf_aceitas
+nf_pendente
+pagamentos_venda
 revenda
-vistorias_veiculos
+usuarios
+vendas
+
 ```
 
 Algumas tabelas possuem relacionamentos entre funcionários, produtos, revendedores, vendas, estoque e demais processos.
@@ -177,17 +196,18 @@ O módulo de estoque é responsável pelo controle dos produtos cadastrados no s
 
 Entre as informações utilizadas estão:
 
-* Código do material
 * Nome do produto
-* Preço unitário
 * Quantidade
-* Informações relacionadas ao estoque
+* Unidade do produto
+* Tipo do produto
+* data de atualização
+* Usuario que cadastrou
+* E as ações que são usadas especificadamente pelos administradores.
 
 Para fertilizantes, existe também a tabela:
 
 ```text
-estoque_fertilizantes
-```
+DEPOSITO```
 
 permitindo um controle específico dos produtos comercializados pela Fertiquim.
 
@@ -299,22 +319,9 @@ Entre suas funcionalidades estão:
 * Proteção de pastas através de senha
 
 Os arquivos são armazenados no computador servidor e o caminho de armazenamento deve ser configurado de acordo com a instalação utilizada.
-
+(PROCEDIMENTO PENDENTE AINDA DEVIDO A FALTA DE UM SERVIDOR...)
 ---
 
-# 🧾 Geração de PDF
-
-O sistema utiliza o **Dompdf** para geração de documentos PDF.
-
-A biblioteca deve estar corretamente instalada no projeto através do Composer ou disponibilizada na estrutura utilizada pelo sistema.
-
-Exemplo de instalação:
-
-```bash
-composer require dompdf/dompdf
-```
-
----
 
 # 🌐 Acesso pela rede
 
