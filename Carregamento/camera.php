@@ -1,9 +1,9 @@
 <?php
 // Configuração da câmera
-$ip = "192.168.1.113";
+$ip = "192.168.0.21";
 $porta = "";
 $usuario = "admin";
-$senha = "Fertiquim@2025";
+$senha = "Nippon@123";
 
 // URL do snapshot
 $url = "http://$ip:$porta/cgi-bin/snapshot.cgi";

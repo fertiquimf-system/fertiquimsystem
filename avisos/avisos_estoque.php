@@ -6,8 +6,8 @@ $aviso = "🚀 Nova versão do sistema disponível!
             
             A supervisão orientou para toda vez
             que necessário qualquer alteração no estoque
-            deve ser solicitado ajuste via email
-            TI_fertiquim@gmail.com
+            deve ser solicitado diretamente com a ANA de 
+            Engenheiro Beltrão-PR
 
             * Solicite ao suporte via email, o modelo de mensagem
             Para abertura de ticket
