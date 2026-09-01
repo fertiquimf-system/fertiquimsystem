@@ -51,6 +51,10 @@ if (!isset($_SESSION['nome_usuario'])) {
      <h2></h2>
      </a>
 
+      <a href="../consumivel/consumiveis.php" class="card consumivel-card">
+     <h2></h2>
+     </a>
+
     </div>
   </div>
   <?php 

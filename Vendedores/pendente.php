@@ -52,29 +52,35 @@ function toggleItens(id) {
     rows.forEach(r => r.style.display = r.style.display === 'table-row' ? 'none' : 'table-row');
 }
 
-function aprovarVenda(id) {
-    const formas = ["Crédito", "Débito", "Dinheiro", "Pix", "Cheque"];
-    let opcoes = "Escolha a forma de pagamento:\n";
-    formas.forEach((f, idx) => {
-        opcoes += (idx+1) + " - " + f + "\n";
-    });
+function registrarPagamento(id, total){
 
-    let escolha = prompt(opcoes);
-    if(!escolha) return;
+    let valor = prompt(
+        'Valor total da venda: R$ ' + Number(total).toFixed(2) +
+        '\n\nInforme o valor pago:'
+    );
 
-    escolha = parseInt(escolha);
-    if(escolha < 1 || escolha > formas.length){
-        alert("Opção inválida!");
+    if(valor == null) return;
+
+    valor = valor.replace(',', '.');
+
+    if(isNaN(valor) || Number(valor) <= 0){
+        alert('Informe um valor válido.');
         return;
     }
 
-    const forma_pagamento = formas[escolha-1];
+    let observacao = prompt('Observação (opcional):', '');
 
-    if(confirm(`Aprovar esta venda com pagamento: ${forma_pagamento}?`)){
-        fetch('aprovar_venda.php?id_venda=' + id + '&forma_pagamento=' + encodeURIComponent(forma_pagamento))
-        .then(res => res.text())
-        .then(res => { alert(res); location.reload(); });
-    }
+    fetch(
+        'registrar_pagamento.php?id_venda=' + id +
+        '&valor_pago=' + valor +
+        '&observacao=' + encodeURIComponent(observacao)
+    )
+    .then(r => r.text())
+    .then(r => {
+        alert(r);
+        location.reload();
+    });
+
 }
 
 function gerarCanhoto(id) {
@@ -146,27 +152,80 @@ function filtrarStatus(select){
       </td>
       <td>
         <button class="btn btn-expand" onclick="toggleItens(<?php echo $v['id_venda']; ?>)">Itens</button>
-        <button class="btn btn-approve" onclick="aprovarVenda(<?php echo $v['id_venda']; ?>)" <?php echo $v['status']=='aprovada'?'disabled':''; ?>>Aprovar</button>
+          
+        <?php
+$sqlTotal = "SELECT SUM(valor_total) AS total
+             FROM itens_venda
+             WHERE id_venda = ".$v['id_venda'];
+
+$resTotal = $conn->query($sqlTotal);
+$totalVenda = 0;
+
+if($resTotal && $resTotal->num_rows > 0){
+    $dadosTotal = $resTotal->fetch_assoc();
+    $totalVenda = $dadosTotal['total'] ?? 0;
+}
+?>
+       
+<button
+class="btn btn-approve"
+onclick="registrarPagamento(
+    <?= $v['id_venda']; ?>,
+    <?= $totalVenda; ?>
+)"
+<?= $v['status']=='aprovada'?'disabled':''; ?>>
+Registrar Pagamento
+</button>
         <button class="btn btn-canhoto" onclick="gerarCanhoto(<?php echo $v['id_venda']; ?>)">Canhoto</button>
         <button class="btn btn-remove" onclick="removerVenda(<?php echo $v['id_venda']; ?>)">Remover</button>
       </td>
     </tr>
-    <?php
-      // Buscar itens da venda
-      $sqlItens = "SELECT * FROM itens_venda WHERE id_venda = ".$v['id_venda'];
-      $resItens = $conn->query($sqlItens);
-      while($i = $resItens->fetch_assoc()):
-    ?>
-    <tr class="item-row item-of-<?php echo $v['id_venda']; ?>">
-      <td colspan="2"><strong>Produto:</strong> <?php echo $i['produto']; ?></td>
-      <td>Qtd: <?php echo $i['quantidade']; ?></td>
-      <td>Unidade: <?php echo $i['unidade']; ?></td>
-      <td>Tipo: <?php echo $i['tipo']; ?></td>
-      <td>Valor Unit.: <?php echo number_format($i['valor_unitario'],2); ?></td>
-      <td colspan="2">Total: <?php echo number_format($i['valor_total'],2); ?></td>
-      <td></td>
-    </tr>
-    <?php endwhile; ?>
+<?php
+  // Buscar itens da venda + nome do produto
+  $sqlItens = "
+      SELECT 
+          iv.*,
+          e.nome_produto
+      FROM itens_venda iv
+      LEFT JOIN deposito e 
+          ON e.id = iv.produto
+      WHERE iv.id_venda = ".$v['id_venda'];
+
+  $resItens = $conn->query($sqlItens);
+
+  while($i = $resItens->fetch_assoc()):
+?>
+<tr class="item-row item-of-<?php echo $v['id_venda']; ?>">
+    <td colspan="2">
+        <strong>Produto:</strong>
+        <?php echo htmlspecialchars($i['nome_produto'] ?? 'Produto não encontrado'); ?>
+    </td>
+
+    <td>
+        Qtd: <?php echo $i['quantidade']; ?>
+    </td>
+
+    <td>
+        Unidade: <?php echo $i['unidade']; ?>
+    </td>
+
+    <td>
+        Tipo: <?php echo $i['tipo']; ?>
+    </td>
+
+    <td>
+        Valor Unit.:
+        R$ <?php echo number_format($i['valor_unitario'], 2, ',', '.'); ?>
+    </td>
+
+    <td colspan="2">
+        Total:
+        R$ <?php echo number_format($i['valor_total'], 2, ',', '.'); ?>
+    </td>
+
+    <td></td>
+</tr>
+<?php endwhile; ?>
 <?php endwhile; ?>
   </tbody>
 </table>

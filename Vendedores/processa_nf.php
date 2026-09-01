@@ -1,52 +1,63 @@
 <?php
+
 require_once '../conexaohost/conexao.php';
+
 session_start();
-
-// Receber dados da venda
-$numero_venda   = $_POST['numero_venda'];
-$cliente        = $_POST['nome'];
-$cpf_cnpj       = $_POST['tipo_cpf_cnpj'];
-$telefone       = $_POST['telefone'];
-$endereco       = $_POST['endereco'];
-$cep            = $_POST['cep'];
-$responsavel    = $_POST['responsavel_entrega'];
-$revendedor_id  = $_POST['revendedor_id'];
-
-// Iniciar transação
-$conn->begin_transaction();
 
 try {
 
-    // Inserir venda
-    $sqlVenda = "INSERT INTO vendas
-    (
-        numero_venda,
-        cliente,
-        revendedor_id,
-        cpf_cnpj,
-        telefone,
-        endereco,
-        cep,
-        responsavel,
-        data_venda,
-        status
-    )
-    VALUES
-    (
-        ?, ?, ?, ?, ?, ?, ?, ?, NOW(), 'pendente'
-    )";
+    // Receber dados da venda
+    $numero_venda = $_POST['numero_venda'] ?? null;
+    $cliente      = $_POST['nome'] ?? null;
+    $cpf_cnpj     = $_POST['tipo_cpf_cnpj'] ?? null;
+    $telefone     = $_POST['telefone'] ?? null;
+    $endereco     = $_POST['endereco'] ?? null;
+    $cep          = $_POST['cep'] ?? null;
+    $responsavel  = $_POST['responsavel_entrega'] ?? null;
+    $matricula    = $_POST['matricula'] ?? null;
+
+
+    // Iniciar transação
+    $conn->begin_transaction();
+
+
+    // =========================
+    // INSERIR VENDA
+    // =========================
+
+    $sqlVenda = "
+        INSERT INTO vendas
+        (
+            numero_venda,
+            cliente,
+            matricula,
+            cpf_cnpj,
+            telefone,
+            endereco,
+            cep,
+            responsavel,
+            data_venda,
+            status
+        )
+        VALUES
+        (
+            ?, ?, ?, ?, ?, ?, ?, ?, NOW(), 'pendente'
+        )
+    ";
 
     $stmt = $conn->prepare($sqlVenda);
 
     if (!$stmt) {
-        throw new Exception("Erro ao preparar venda: " . $conn->error);
+        throw new Exception(
+            "Erro ao preparar venda: " . $conn->error
+        );
     }
 
     $stmt->bind_param(
         "isisssss",
         $numero_venda,
         $cliente,
-        $revendedor_id,
+        $matricula,
         $cpf_cnpj,
         $telefone,
         $endereco,
@@ -54,39 +65,57 @@ try {
         $responsavel
     );
 
-    $stmt->execute();
+    if (!$stmt->execute()) {
+        throw new Exception(
+            "Erro ao inserir venda: " . $stmt->error
+        );
+    }
 
+    // Recuperar ID da venda criada
     $idVenda = $stmt->insert_id;
 
-    // Receber itens
-    $produtos    = $_POST['produto'];
-    $quantidades = $_POST['quantidade'];
-    $unidades    = $_POST['unidade'];
-    $tipos       = $_POST['tipo'];
-    $valoresUnit = $_POST['valor_unitario'];
-    $valoresTot  = $_POST['valor_total'];
 
-    // Inserir itens
-    $sqlItem = "INSERT INTO itens_venda
-    (
-        id_venda,
-        produto,
-        quantidade,
-        unidade,
-        tipo,
-        valor_unitario,
-        valor_total
-    )
-    VALUES
-    (
-        ?, ?, ?, ?, ?, ?, ?
-    )";
+    // =========================
+    // RECEBER ITENS DA VENDA
+    // =========================
+
+    $produtos    = $_POST['produto'] ?? [];
+    $quantidades = $_POST['quantidade'] ?? [];
+    $unidades    = $_POST['unidade'] ?? [];
+    $tipos       = $_POST['tipo'] ?? [];
+    $valoresUnit = $_POST['valor_unitario'] ?? [];
+    $valoresTot  = $_POST['valor_total'] ?? [];
+
+
+    // =========================
+    // INSERIR ITENS
+    // =========================
+
+    $sqlItem = "
+        INSERT INTO itens_venda
+        (
+            id_venda,
+            produto,
+            quantidade,
+            unidade,
+            tipo,
+            valor_unitario,
+            valor_total
+        )
+        VALUES
+        (
+            ?, ?, ?, ?, ?, ?, ?
+        )
+    ";
 
     $stmtItem = $conn->prepare($sqlItem);
 
     if (!$stmtItem) {
-        throw new Exception("Erro ao preparar item: " . $conn->error);
+        throw new Exception(
+            "Erro ao preparar item: " . $conn->error
+        );
     }
+
 
     for ($i = 0; $i < count($produtos); $i++) {
 
@@ -96,6 +125,7 @@ try {
         $tipo      = $tipos[$i];
         $valorUnit = $valoresUnit[$i];
         $valorTot  = $valoresTot[$i];
+
 
         $stmtItem->bind_param(
             "isdssdd",
@@ -108,21 +138,38 @@ try {
             $valorTot
         );
 
-        $stmtItem->execute();
+
+        if (!$stmtItem->execute()) {
+            throw new Exception(
+                "Erro ao inserir item: " . $stmtItem->error
+            );
+        }
     }
 
-    // Confirmar transação
+
+    // =========================
+    // CONFIRMAR TRANSAÇÃO
+    // =========================
+
     $conn->commit();
 
-    echo "<script>
-        alert('Venda salva com sucesso!');
-        window.location.href='pendente.php';
-    </script>";
+
+    echo "
+        <script>
+            alert('Venda salva com sucesso!');
+            window.location.href = 'pendente.php';
+        </script>
+    ";
+
 
 } catch (Exception $e) {
 
+    // Desfazer tudo se ocorrer algum erro
     $conn->rollback();
 
-    die("Erro ao salvar venda: " . $e->getMessage());
+    die(
+        'Erro ao salvar venda: ' . $e->getMessage()
+    );
 }
+
 ?>

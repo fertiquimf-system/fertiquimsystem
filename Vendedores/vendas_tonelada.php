@@ -87,12 +87,18 @@ $resRevendas = $conn->query($sqlRevendas);
 
              <div class="form-group">
                <label>Revendedor:</label> 
-               <select name="revendedor_id" required>
-                 <option value="">Selecione</option> 
-                 <?php while($r = $resRevendas->fetch_assoc()): ?> 
-                  <option value="<?php echo $r['id']; ?>">
-                     <?php echo $r['nome']; ?> - Mat: <?php echo $r['matricula']; ?> </option> <?php endwhile; ?> 
-                    </select> 
+               <select name="matricula" required>
+    <option value="">Selecione</option>
+
+    <?php while($r = $resRevendas->fetch_assoc()): ?>
+
+        <option value="<?php echo $r['matricula']; ?>">
+            <?php echo $r['nome']; ?> - Mat: <?php echo $r['matricula']; ?>
+        </option>
+
+    <?php endwhile; ?>
+
+</select>
                   </div>
         
         <div class="form-group">

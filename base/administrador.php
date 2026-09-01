@@ -20,7 +20,6 @@ if (!isset($_SESSION['nome_usuario'])) {
     <h1>FERTIQUIM Fertilizantes</h1>
     <nav>
       <a href="../pginicial/pginicial.php">Início</a>
-      <a href="../admin/dashboard_admin.php">Painel Administrador</a>
       <a href="relatorio.php">Gerar Relatório</a>
       <a href="../pglogin/logout.php">Sair</a>
     </nav>
